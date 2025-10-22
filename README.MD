@@ -1,7 +1,7 @@
 # Spring Boot With Junit 5
 
 This is a basic Spring Boot application with Rest APIs and CRUD operations on MySQL DB.
-For JUnits, an in-memory H2 db is used for storing/retrieval of fata. 
+For JUnits, an in-memory H2 db is used to store & retrieve data. 
 
 ## Dependency's
 

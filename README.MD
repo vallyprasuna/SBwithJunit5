@@ -1,5 +1,8 @@
 # Spring Boot With Junit 5
 
+This is a basic Spring Boot application with Rest APIs and CRUD operations on MySQL DB.
+For JUnits, an in-memory H2 db is used for storing/retrieval of fata. 
+
 ## Dependency's
 
 1. Spring Data JPA
@@ -13,8 +16,6 @@
 
 ## Version Used
 
-1. Java - **17.0.3.1**
-2. Spring Boot - **3.0.4**
-3. MySql - **8.0.30**
-4. Hibernate - **6.1.7**
-5. Tomcat - **10.1.5**
+1. Java - **21.0.7**
+2. Spring Boot - **3.5.6**
+3. MySql - **9.4.0**

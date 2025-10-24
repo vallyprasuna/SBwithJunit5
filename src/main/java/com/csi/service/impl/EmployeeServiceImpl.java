@@ -5,6 +5,8 @@ import com.csi.dto.EmployeeDTO;
 import com.csi.model.Employee;
 import com.csi.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,5 +54,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteEmployeeById(int empId) {
         employeeDao.deleteEmployeeById(empId);
+    }
+
+    @Override
+    public Page<Employee> getAllData(Pageable pageable) {
+
+       return employeeDao.getAllData(pageable);
+
     }
 }

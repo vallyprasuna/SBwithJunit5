@@ -8,6 +8,8 @@ import com.csi.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
 import java.util.List;
@@ -27,7 +29,6 @@ class EmployeeServiceImplTest {
     @Test
     void getAllData() {
         List<Employee> employees = employeeService.getAllData();
-        System.out.println(employees);
         assertEquals(4, employees.size());
     }
 
@@ -63,4 +64,12 @@ class EmployeeServiceImplTest {
         employeeService.deleteEmployeeById(2);
         assertThrows(EmployeeNotFound.class, () -> employeeService.getDataById(2));
     }
+
+    @Test
+    void getAllDataWithPagination() {
+        Pageable pageable = PageRequest.of(0, 2);
+        List<Employee> employees = employeeService.getAllData(pageable).getContent();
+        assertEquals(2, employees.size());
+    }
+
 }

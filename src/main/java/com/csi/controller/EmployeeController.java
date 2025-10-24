@@ -24,7 +24,7 @@ public class EmployeeController {
     @GetMapping("/pages")
     public List<Employee> getEmployees(
             @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "2") int size
+            @RequestParam(required = false, defaultValue = "10") int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
         List<Employee> res = employeeService.getAllData(pageable).getContent();

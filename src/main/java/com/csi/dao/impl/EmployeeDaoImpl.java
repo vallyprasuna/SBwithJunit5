@@ -5,6 +5,8 @@ import com.csi.exception.EmployeeNotFound;
 import com.csi.model.Employee;
 import com.csi.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -33,5 +35,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public void deleteEmployeeById(int empId) {
         employeeRepository.deleteById(empId);
+    }
+
+    @Override
+    public Page<Employee> getAllData(Pageable pageable) {
+        return employeeRepository.findAll(pageable);
     }
 }

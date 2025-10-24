@@ -5,6 +5,9 @@ import com.csi.model.Employee;
 import com.csi.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,16 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @GetMapping("/pages")
+    public List<Employee> getEmployees(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "2") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<Employee> res = employeeService.getAllData(pageable).getContent();
+        return ResponseEntity.ok(res).getBody();
+    }
 
     @GetMapping("/")
     public ResponseEntity<List<Employee>> getAllEmployees() {

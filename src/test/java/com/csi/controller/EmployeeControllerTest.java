@@ -12,6 +12,10 @@ import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -144,4 +148,19 @@ class EmployeeControllerTest {
 
         verify(employeeService, times(1)).deleteEmployeeById(employeeList.get(0).getEmpId());
     }
+
+    @Test
+    void getAllEmployeesWithPagination() throws Exception {
+        Pageable pageable = PageRequest.of(1, 3);
+        Page<Employee> employeePage = new PageImpl<>(employeeList.subList(3,4), pageable, employeeList.size());
+        when(employeeService.getAllData(pageable)).thenReturn(employeePage);
+        mockMvc.perform(get("/employee/pages?page=1&size=3"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].empAddress", is("United Stated Of America")));
+
+        verify(employeeService, times(1)).getAllData(pageable);
+    }
+
 }

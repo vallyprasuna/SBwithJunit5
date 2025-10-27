@@ -74,7 +74,7 @@ class EmployeeServiceImplTest {
 
     @Test
     void searchEmployeeData() {
-        List<Employee> employees = employeeService.searchEmployees("ohn");
+        List<Employee> employees = employeeService.searchEmployees("ram");
         assertEquals(1, employees.size());
     }
 }

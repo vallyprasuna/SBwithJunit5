@@ -41,4 +41,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public Page<Employee> getAllData(Pageable pageable) {
         return employeeRepository.findAll(pageable);
     }
+
+    @Override
+    public List<Employee> searchEmployees(String name) {
+        return employeeRepository.findByEmpNameContainingIgnoreCase(name);
+    }
 }

@@ -22,7 +22,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
 
-    @GetMapping("/employees/search")
+    @GetMapping("/search")
     public ResponseEntity<List<Employee>> searchEmployees(@RequestParam String name) {
         return ResponseEntity.ok(employeeService.searchEmployees(name));
     }

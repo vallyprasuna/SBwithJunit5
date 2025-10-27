@@ -170,7 +170,7 @@ class EmployeeControllerTest {
     void searchEmployeesTest() throws Exception {
 
         when(employeeService.searchEmployees("shay")).thenReturn(employeeList2);
-        mockMvc.perform(get("/employee/employees/search").param("name", "shay"))
+        mockMvc.perform(get("/employee/search").param("name", "shay"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$[0].empName").value("Akshay K"));

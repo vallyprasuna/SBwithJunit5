@@ -21,6 +21,13 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+
+    @GetMapping("/employees/search")
+    public ResponseEntity<List<Employee>> searchEmployees(@RequestParam String name) {
+        return ResponseEntity.ok(employeeService.searchEmployees(name));
+    }
+
+
     @GetMapping("/pages")
     public Page<Employee> getEmployees(
             @RequestParam(required = false, defaultValue = "0") Integer page,

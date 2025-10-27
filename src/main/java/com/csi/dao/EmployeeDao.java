@@ -17,4 +17,6 @@ public interface EmployeeDao {
     void deleteEmployeeById(int empId);
 
     Page<Employee> getAllData(Pageable pageable);
+
+    List<Employee> searchEmployees(String name);
 }

@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest
 class EmployeeControllerTest {
-    public static List<Employee> employeeList;
+    public static List<Employee> employeeList, employeeList2;
 
     @Autowired
     private MockMvc mockMvc;
@@ -58,6 +58,9 @@ class EmployeeControllerTest {
                 new Employee(24, "Akshay K", "United Stated Of America", 8523647982L,
                         852365.62, new Date(13 - 11 - 2003), "akshay.k@gmail.com")
         ).toList();
+        employeeList2 = Stream.of(
+                new Employee(5, "Akshay K", "I n d i a", 9852364712L,
+                        85699.68, new Date(23 - 5 - 2001), "akshay@gmail.com")).toList();
     }
 
     @Test
@@ -162,5 +165,16 @@ class EmployeeControllerTest {
 
         verify(employeeService, times(1)).getAllData(pageable);
     }
+
+    @Test
+    void searchEmployeesTest() throws Exception {
+
+        when(employeeService.searchEmployees("shay")).thenReturn(employeeList2);
+        mockMvc.perform(get("/employee/employees/search").param("name", "shay"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$[0].empName").value("Akshay K"));
+    }
+
 
 }

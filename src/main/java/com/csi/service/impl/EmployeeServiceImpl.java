@@ -62,4 +62,10 @@ public class EmployeeServiceImpl implements EmployeeService {
        return employeeDao.getAllData(pageable);
 
     }
+
+    @Override
+    public List<Employee> searchEmployees(String name) {
+        return employeeDao.searchEmployees(name);
+    }
+
 }

@@ -46,4 +46,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public List<Employee> searchEmployees(String name) {
         return employeeRepository.findByEmpNameContainingIgnoreCase(name);
     }
+
+    @Override
+    public Page<Employee> searchEmployees(String name, Pageable pageable) {
+        return employeeRepository.findByEmpNameContainingIgnoreCase(name, pageable);
+    }
 }

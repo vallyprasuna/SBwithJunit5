@@ -18,6 +18,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest
 class EmployeeControllerTest {
-    public static List<Employee> employeeList, employeeList2;
+    public static List<Employee> employeeList, employeeList2, employeeList3;
 
     @Autowired
     private MockMvc mockMvc;
@@ -60,6 +62,9 @@ class EmployeeControllerTest {
         ).toList();
         employeeList2 = Stream.of(
                 new Employee(5, "Akshay K", "I n d i a", 9852364712L,
+                        85699.68, new Date(23 - 5 - 2001), "akshay@gmail.com")).toList();
+        employeeList3 = Stream.of(
+                new Employee(5, "Ram K", "I n d i a", 9852364712L,
                         85699.68, new Date(23 - 5 - 2001), "akshay@gmail.com")).toList();
     }
 
@@ -167,13 +172,21 @@ class EmployeeControllerTest {
     }
 
     @Test
-    void searchEmployeesTest() throws Exception {
-
+    void searchEmployeesWithPaginationTest() throws Exception {
         when(employeeService.searchEmployees("shay")).thenReturn(employeeList2);
         mockMvc.perform(get("/employee/search").param("name", "shay"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$[0].empName").value("Akshay K"));
+
+        Pageable pageable = PageRequest.of(0, 1);
+        Page<Employee> employeeSearchPage = new PageImpl<>(employeeList3, pageable, 2);
+
+        when(employeeService.searchEmployees("r", pageable)).thenReturn(employeeSearchPage);
+        mockMvc.perform(get("/employee/search?name=r&page=0&size=1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$.content[0].empName").value("Ram K"));
     }
 
 

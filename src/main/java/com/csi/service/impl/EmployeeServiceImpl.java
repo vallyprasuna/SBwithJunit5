@@ -68,4 +68,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeDao.searchEmployees(name);
     }
 
+    @Override
+    public Page<Employee> searchEmployees(String name, Pageable pageable) {
+        return employeeDao.searchEmployees(name, pageable);
+    }
+
 }

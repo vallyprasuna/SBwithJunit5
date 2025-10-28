@@ -8,6 +8,7 @@ import com.csi.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -76,5 +77,12 @@ class EmployeeServiceImplTest {
     void searchEmployeeData() {
         List<Employee> employees = employeeService.searchEmployees("ram");
         assertEquals(1, employees.size());
+    }
+
+    @Test
+    void searchEmployeeDataWithPagination() {
+        Pageable pageable = PageRequest.of(0, 1);
+        Page<Employee> employees = employeeService.searchEmployees("am", pageable);
+        assertEquals(1, employees.getContent().size());
     }
 }

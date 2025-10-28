@@ -19,4 +19,6 @@ public interface EmployeeDao {
     Page<Employee> getAllData(Pageable pageable);
 
     List<Employee> searchEmployees(String name);
+
+    Page<Employee> searchEmployees(String name, Pageable pageable);
 }

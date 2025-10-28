@@ -23,8 +23,21 @@ public class EmployeeController {
 
 
     @GetMapping("/search")
-    public ResponseEntity<List<Employee>> searchEmployees(@RequestParam String name) {
-        return ResponseEntity.ok(employeeService.searchEmployees(name));
+    public ResponseEntity<?> searchEmployees(
+            @RequestParam String name,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size
+    ) {
+        if(page == null && size == null) {
+            return ResponseEntity.ok(employeeService.searchEmployees(name));
+        }
+        else {
+            int pageNumber = (page != null) ? page : 0;
+            int pageSize = (size != null) ? size : 10;
+            Pageable pageable = PageRequest.of(pageNumber, pageSize);
+            return ResponseEntity.ok(employeeService.searchEmployees(name, pageable));
+        }
+
     }
 
 
